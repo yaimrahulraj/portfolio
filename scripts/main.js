@@ -41,3 +41,86 @@ $('a.smooth-scroll')
     }
   }
 });
+
+
+// Sample certificate data (replace with your actual certificate data)
+const certificates = [
+  { name: "MCD - Level 1", description: "MuleSoft Developer Level 1", imageUrl: "images/cert/mcd-1.jpg" },
+  { name: "Python Institute", description: "Python Advanced certification", imageUrl: "images/cert/pcap.png" },
+  { name: "Google", description: "Automation using Python", imageUrl: "images/cert/google.png" },
+  { name: "Amazon Web Services", description: "AWS Developer Associate", imageUrl: "images/cert/aws_dev.png" },
+  { name: "Google - ShapeAI", description: "Python, Analytics and ML", imageUrl: "images/cert/shapeai.png" },
+  // Add more certificate objects as needed
+];
+
+let displayedCertificates = 4; // Initial number of certificates displayed
+
+// Function to load certificates
+function loadCertificates(startIndex, count) {
+  const certificateGallery = document.getElementById('certificate-gallery');
+  // Clear previous certificates
+  certificateGallery.innerHTML = '';
+  // Loop through the certificates to be loaded
+  for (let i = startIndex; i < startIndex + count && i < certificates.length; i += 2) {
+    const certificate1 = certificates[i];
+    const certificate2 = certificates[i + 1];
+    const row = document.createElement('div');
+    row.className = 'row';
+    if (certificate1) {
+      const certificateHtml1 = `
+        <div class="col-md-6">
+          <div class="cc-porfolio-image img-raised" data-aos="fade-up" data-aos-anchor-placement="top-bottom">
+            <a href="#certificate${i + 1}">
+              <figure class="cc-effect"><img src="${certificate1.imageUrl}" alt="Certificate Image"/>
+                <figcaption>
+                  <div class="h4">${certificate1.name}</div>
+                  <p>${certificate1.description}</p>
+                </figcaption>
+              </figure>
+            </a>
+          </div>
+        </div>
+      `;
+      row.innerHTML += certificateHtml1;
+    }
+    if (certificate2) {
+      const certificateHtml2 = `
+        <div class="col-md-6">
+          <div class="cc-porfolio-image img-raised" data-aos="fade-up" data-aos-anchor-placement="top-bottom">
+            <a href="#certificate${i + 2}">
+              <figure class="cc-effect"><img src="${certificate2.imageUrl}" alt="Certificate Image"/>
+                <figcaption>
+                  <div class="h4">${certificate2.name}</div>
+                  <p>${certificate2.description}</p>
+                </figcaption>
+              </figure>
+            </a>
+          </div>
+        </div>
+      `;
+      row.innerHTML += certificateHtml2;
+    }
+    certificateGallery.appendChild(row);
+  }
+}
+
+
+// Load initial certificates
+loadCertificates(0, displayedCertificates);
+
+// Event listener for "Load More" button
+document.getElementById('load-more-btn').addEventListener('click', function() {
+  displayedCertificates += 4;
+  loadCertificates(0, displayedCertificates); // Reload all certificates
+  document.getElementById('load-more-btn').style.display = 'none'; // Hide Load More button
+  document.getElementById('load-less-btn').style.display = 'inline-block'; // Show Load Less button
+});
+
+// Event listener for "Load Less" button
+document.getElementById('load-less-btn').addEventListener('click', function() {
+  displayedCertificates = 4; // Reset to initial count
+  loadCertificates(0, displayedCertificates); // Reload initial certificates
+  document.getElementById('load-more-btn').style.display = 'inline-block'; // Show Load More button
+  document.getElementById('load-less-btn').style.display = 'none'; // Hide Load Less button
+});
+
